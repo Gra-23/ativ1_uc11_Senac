@@ -1,9 +1,10 @@
 
+import javax.swing.JOptionPane;
+
+
 public class cadastroVIEW extends javax.swing.JFrame {
 
-    /**
-     * Creates new form cadastroVIEW
-     */
+    
     public cadastroVIEW() {
         initComponents();
     }
@@ -142,6 +143,7 @@ public class cadastroVIEW extends javax.swing.JFrame {
         
         ProdutosDAO produtodao = new ProdutosDAO();
         produtodao.cadastrarProduto(produto);
+        JOptionPane.showMessageDialog(this, "Produto cadastrado com sucesso!");
         
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
