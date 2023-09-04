@@ -1,11 +1,15 @@
 
 public class ProdutosDTO {
-    private Integer id;
+    private int id;
     private String nome;
     private Integer valor;
     private String status;
 
-    public Integer getId() {
+    public ProdutosDTO() {
+    }
+    
+
+    public int getId() {
         return id;
     }
 
@@ -21,7 +25,7 @@ public class ProdutosDTO {
         return status;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -9,7 +9,8 @@ import javax.swing.JOptionPane;
 public class conectaDAO {
     
     public Connection connectDB(){
-        //Connection conn = null;
+        
+        Connection conn = null;
         
         try {
             Connection con = DriverManager.getConnection(
