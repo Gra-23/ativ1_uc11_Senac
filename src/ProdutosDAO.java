@@ -31,7 +31,7 @@ public class ProdutosDAO {
             prest.execute();
 
         } catch (Exception e) {
-            System.out.println("Desculpe. Ocorreu um erro ao inserir o produto: " + e.getMessage());
+            System.out.println("Desculpe. Ocorreu um erro ao inserir produto: " + e.getMessage());
         }     
         
     }
@@ -67,6 +67,24 @@ public class ProdutosDAO {
         } catch (Exception e) {
             return null;
         }
+    }
+    
+    public void venderProduto (ProdutosDTO produto){
+        
+        String sql = ("UPDATE produtos SET status = ? WHERE id = ?");
+         
+        try {
+            PreparedStatement prest = conn.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ResultSet.CONCUR_UPDATABLE);
+            //PreparedStatement prest = this.conn.prepareStatement(sql);
+            prest.setString(1,"Vendido");
+            prest.setInt(2,produto.getId());
+            prest.execute();
+
+        } catch (Exception e) {
+            System.out.println("Desculpe. Ocorreu um erro ao atualizar o produto: " + e.getMessage());
+        }     
+        
     }
 
        /* public ProdutosDTO getProduto (int id){

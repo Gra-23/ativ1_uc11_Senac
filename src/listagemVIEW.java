@@ -1,5 +1,6 @@
 
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -152,11 +153,16 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        //int id = pesquisaID.getText();
+        int id = Integer.parseInt(campoID.getText());
+        
+        ProdutosDTO produto = new ProdutosDTO();
+        produto.setId(id);
+        produto.setStatus("Vendido");
         
         ProdutosDAO produtosdao = new ProdutosDAO();
+        produtosdao.venderProduto(produto);
         
-        //produtosdao.venderProduto(Integer.parseInt(id));
+        JOptionPane.showMessageDialog(this, "Status do produto atualizado com sucesso!");
         listarProdutos();
     }//GEN-LAST:event_btnVenderActionPerformed
 
