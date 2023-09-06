@@ -31,13 +31,12 @@ public class ProdutosDAO {
             prest.execute();
 
         } catch (Exception e) {
-            System.out.println("Desculpe. Ocorreu um erro ao inserir o produto: " + e.getMessage());
+            System.out.println("Desculpe. Ocorreu um erro ao inserir produto: " + e.getMessage());
         }     
         
     }
     
     
-    /** Método para retornar todos os filmes cadastrados no BD */
     public List<ProdutosDTO> getProdutos(){
         String sql = "SELECT * FROM produtos";
         
@@ -67,6 +66,53 @@ public class ProdutosDAO {
         } catch (Exception e) {
             return null;
         }
+    }
+    
+    
+    public List<ProdutosDTO> listarProdutosVendidos(){
+        String sql = "SELECT * FROM produtos WHERE status = ?";
+        
+        try {
+            PreparedStatement stmt = this.conn.prepareStatement(sql);
+            stmt.setString(1, "Vendido");
+            ResultSet rs = stmt.executeQuery();            
+            
+            List<ProdutosDTO> listaVendas = new ArrayList<>();
+            
+            while (rs.next()) { /** .next retorna verdadeiro caso exista uma próxima posição dentro do array */
+            ProdutosDTO produto = new ProdutosDTO();
+            /** Salvando dentro do objeto produto as informações */            
+            produto.setId(rs.getInt("id"));
+            produto.setNome(rs.getString("nome"));
+            produto.setValor(rs.getInt("valor"));
+            produto.setStatus(rs.getString("status"));
+            /* Adicionando os elementos na lista criada */
+            listaVendas.add(produto);
+            }
+            return listaVendas;
+            
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    
+    public void venderProduto (ProdutosDTO produto){
+        
+        String sql = ("UPDATE produtos SET status = ? WHERE id = ?");
+         
+        try {
+            PreparedStatement prest = conn.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ResultSet.CONCUR_UPDATABLE);
+            //PreparedStatement prest = this.conn.prepareStatement(sql);
+            prest.setString(1,"Vendido");
+            prest.setInt(2,produto.getId());
+            prest.execute();
+
+        } catch (Exception e) {
+            System.out.println("Desculpe. Ocorreu um erro ao atualizar o produto: " + e.getMessage());
+        }     
+        
     }
 
        /* public ProdutosDTO getProduto (int id){
