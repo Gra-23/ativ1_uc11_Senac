@@ -37,7 +37,6 @@ public class ProdutosDAO {
     }
     
     
-    /** Método para retornar todos os filmes cadastrados no BD */
     public List<ProdutosDTO> getProdutos(){
         String sql = "SELECT * FROM produtos";
         
@@ -68,6 +67,35 @@ public class ProdutosDAO {
             return null;
         }
     }
+    
+    
+    public List<ProdutosDTO> listarProdutosVendidos(){
+        String sql = "SELECT * FROM produtos WHERE status = ?";
+        
+        try {
+            PreparedStatement stmt = this.conn.prepareStatement(sql);
+            stmt.setString(1, "Vendido");
+            ResultSet rs = stmt.executeQuery();            
+            
+            List<ProdutosDTO> listaVendas = new ArrayList<>();
+            
+            while (rs.next()) { /** .next retorna verdadeiro caso exista uma próxima posição dentro do array */
+            ProdutosDTO produto = new ProdutosDTO();
+            /** Salvando dentro do objeto produto as informações */            
+            produto.setId(rs.getInt("id"));
+            produto.setNome(rs.getString("nome"));
+            produto.setValor(rs.getInt("valor"));
+            produto.setStatus(rs.getString("status"));
+            /* Adicionando os elementos na lista criada */
+            listaVendas.add(produto);
+            }
+            return listaVendas;
+            
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
     
     public void venderProduto (ProdutosDTO produto){
         

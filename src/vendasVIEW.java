@@ -1,19 +1,42 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 
-/**
- *
- * @author andre
- */
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
+
 public class vendasVIEW extends javax.swing.JFrame {
 
-    /**
-     * Creates new form listaVendidosVIEW
-     */
+    private void listarProdVendidos() {
+        ProdutosDAO produtoDao = new ProdutosDAO();
+        
+        try{
+        List<ProdutosDTO> listaProd = produtoDao.listarProdutosVendidos();
+            
+        DefaultTableModel tabelaVendas = (DefaultTableModel) listaVendidos.getModel();
+        /** Limpar a tabela para preencher com os novos dados */
+        tabelaVendas.setNumRows(0);
+        
+        listaVendidos.setRowSorter(new TableRowSorter(tabelaVendas));
+    
+        for (ProdutosDTO p : listaProd) { /** em cada volta do laço for, o mesmo adiciona uma dado(produto)dentro do objeto p */
+            Object[] obj = new Object[] {
+                p.getId(),
+                p.getNome(),      
+                p.getValor(),   
+                p.getStatus(),               
+            };
+        tabelaVendas.addRow(obj);
+        } 
+        
+        }catch (Exception e) {
+            System.out.println("Desculpe. Ocorreu um erro ao mostrar a lista de produtos: " + e.getMessage());
+        }  
+    }
+    
+    
     public vendasVIEW() {
         initComponents();
+        listarProdVendidos();
     }
 
     /**
@@ -44,7 +67,7 @@ public class vendasVIEW extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Nome", "Valor", "Status"
             }
         ));
         jScrollPane1.setViewportView(listaVendidos);
